@@ -136,7 +136,6 @@ const TEXT_NOT_READY = 'Not ready';
 const TEXT_READY = 'Ready';
 
 /** SERVER / REDIRECT PLACEHOLDERS **/
-const DATA_SAVE_URL = 'https://<YOUR-SERVER>/save_data';
 const PROLIFIC_COMPLETION_URL =
   'https://app.prolific.co/submissions/complete?cc=<YOUR_COMPLETION_CODE>';
 
@@ -1594,14 +1593,7 @@ let submitTrial = {
   `,
   choices: [BTN_LABEL_SUBMIT],
   on_finish: () => {
-    let allData = jsPsych.data.get().json();
-    fetch(DATA_SAVE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ participant: prolificPID, data: allData })
-    }).then(() => {
-      window.location.href = PROLIFIC_COMPLETION_URL;
-    });
+    window.location.href = PROLIFIC_COMPLETION_URL;
   }
 };
 
@@ -1609,13 +1601,14 @@ let submitTrial = {
  * DATAPIPE
  ******************************/
 
-const subjectID = jsPsych.randomization.randomID(10);
-const filename = `${subjectID}.json`;
+let experimentID = "cEvNcogt2UWQ";
 
-const save_data = {
+let filename = `${prolificPID}.json`;
+
+let save_data = {
   type: jsPsychPipe,
   action: "save",
-  experimentID: "cEvNcogt2UWQ",
+  experiment_id: experimentID,
   filename: filename,
   data_string: () => jsPsych.data.get().json()
 };
