@@ -17,11 +17,11 @@ const ALGO_TRANSFER_COUNTS = {
 };
 
 /** Datapipe Experiment ID **/
-const DATAPIPE_EXPERIMENTID = '0xm72VxaFUwi';
+const DATAPIPE_EXPERIMENTID = '6cXtpKMW2yKq';
 
 /** Prolific Completion URL **/
 const PROLIFIC_COMPLETION_URL =
-  "https://app.prolific.com/submissions/complete?cc=C11R15QQ";
+  "https://app.prolific.com/submissions/complete?cc=CTU8C3C1";
 
 /******************************
  * GLOBAL CONSTANTS & CONFIG
