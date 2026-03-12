@@ -1,7 +1,7 @@
 /* === URLs / STUDY === */
 const DATAPIPE_EXPERIMENTID = 'KVvthzKCSmKv';
 const PROLIFIC_COMPLETION_URL =
-  'https://app.prolific.com/submissions/complete?cc=REPLACE_ME';
+  'https://app.prolific.com/submissions/complete?cc=C1Q3302C';
 
 /* === FACTORS / RANDOMIZATION === */
 const P_TRIAD = 0.5;
