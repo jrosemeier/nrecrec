@@ -112,6 +112,7 @@ const round2CompTransfer2 = randEven(4, TOTAL_BONUS);
 
 /* === GLOBAL STATE === */
 let failedComp = false;
+let didConsent = true;
 let instructionsResolved = false;
 let allowExit = false;
 
@@ -528,8 +529,6 @@ function releaseExitGuard() {
 })();
 
 /* === CONSENT (unchanged language) === */
-let didConsent = true;
-
 const consent = {
   type: jsPsychHtmlButtonResponse,
   stimulus: `
