@@ -19,7 +19,7 @@ const COST_HIGH = 20;
 const MATCH_WAIT_MS_P1 = 20300;
 const MATCH_WAIT_MS_TOTAL = 31600;
 const DELAY_MS = 4000;
-const ROUND1_DECISION_MS = 19600;
+const ROUND1_DECISION_MS = 16600;
 const MAX_DISCONNECT_MS = 120000;
 const PAGE_TRANSITION_DELAY_MS = 500;
 const MIN_REASON_CHARS = 40;
@@ -166,7 +166,8 @@ jsPsych.data.addProperties({
   costCondition,
   round1CompTransfer,
   round2CompTransfer1,
-  round2CompTransfer2
+  round2CompTransfer2,
+  didConsent
 });
 
 /* === HELPERS === */
@@ -400,6 +401,7 @@ function getSaveRow(saveStage, saveIndex) {
     round1CompTransfer,
     round2CompTransfer1,
     round2CompTransfer2,
+    didConsent,
     failedComp,
     instructionsResolved,
     matched: studyState.matched,
@@ -1489,8 +1491,8 @@ const round1Outcome = {
       ${callout(
     null,
     `
-        <p><strong>Cost</strong>: The Helper decided to give ${pts(costCondition)}.</p>
-        <p><strong>Benefit</strong>: As a result, you${isTriad ? ' and the other Reciprocator each' : ''
+        <p>The Helper decided to give ${pts(costCondition)}.</p>
+        <p>As a result, you${isTriad ? ' and the other Reciprocator each' : ''
     } receive ${pts(benefitCondition)}.</p>
       `,
     'callout-auto'
