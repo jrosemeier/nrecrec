@@ -4,6 +4,7 @@ const PROLIFIC_COMPLETION_URL =
   'https://app.prolific.com/submissions/complete?cc=C1Q3302C';
 
 /* === FACTORS / RANDOMIZATION === */
+const P_STRUCTURE_BENEFIT_ARM = 0.5;   // 50% go to structure x benefit
 const P_TRIAD = 0.5;
 const P_BENEFIT_HIGH = 0.5;
 const P_COST_HIGH = 0.5;
@@ -14,6 +15,10 @@ const BENEFIT_LOW = 20;
 const BENEFIT_HIGH = 40;
 const COST_LOW = 10;
 const COST_HIGH = 20;
+
+/* fixed values for the non-manipulated factor */
+const FIXED_COST_FOR_BENEFIT_ARM = COST_HIGH;
+const FIXED_BENEFIT_FOR_COST_ARM = BENEFIT_LOW;
 
 /* === TIMING === */
 const MATCH_WAIT_MS_P1 = 20300;
@@ -81,11 +86,25 @@ function randomByPID(probability, salt) {
   return deterministicUniform(seed) < probability;
 }
 
+/* first assign participant to one of the two surveys */
+const experimentArm = randomByPID(P_STRUCTURE_BENEFIT_ARM, 'experimentArm')
+  ? 'structure_benefit'
+  : 'structure_cost';
+
+/* structure is randomized in both arms */
 const structureCondition = randomByPID(P_TRIAD, 'structure') ? 3 : 2;
-const benefitCondition = randomByPID(P_BENEFIT_HIGH, 'benefit')
-  ? BENEFIT_HIGH
-  : BENEFIT_LOW;
-const costCondition = randomByPID(P_COST_HIGH, 'cost') ? COST_HIGH : COST_LOW;
+
+/* then randomize only the relevant factor */
+const benefitCondition =
+  experimentArm === 'structure_benefit'
+    ? (randomByPID(P_BENEFIT_HIGH, 'benefit') ? BENEFIT_HIGH : BENEFIT_LOW)
+    : FIXED_BENEFIT_FOR_COST_ARM;
+
+const costCondition =
+  experimentArm === 'structure_cost'
+    ? (randomByPID(P_COST_HIGH, 'cost') ? COST_HIGH : COST_LOW)
+    : FIXED_COST_FOR_BENEFIT_ARM;
+
 const isTriad = structureCondition === 3;
 const multiplier = benefitCondition / costCondition;
 const otherPlayersCount = structureCondition - 1;
@@ -162,6 +181,7 @@ jsPsych.data.addProperties({
   prolificPID: hasProlificPID ? prolificPIDFromURL : null,
   hasProlificPID,
   runType,
+  experimentArm,
   structureCondition,
   benefitCondition,
   costCondition,
@@ -348,6 +368,7 @@ const SAVE_COLUMNS = [
   'saveIndex',
   'saveStage',
   'savedAtISO',
+  'experimentArm',
   'structureCondition',
   'benefitCondition',
   'costCondition',
@@ -393,6 +414,7 @@ function getSaveRow(saveStage, saveIndex) {
     saveIndex,
     saveStage,
     savedAtISO: new Date().toISOString(),
+    experimentArm,
     structureCondition,
     benefitCondition,
     costCondition,
