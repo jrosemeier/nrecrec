@@ -157,6 +157,9 @@ const studyState = {
   expectedOtherReciprocatorFirstInputRTMs: null,
   expectedOtherReciprocatorRTMs: null,
 
+  costBenefitPageShownAtMs: null,
+  costBenefitToReciprocateSubmitRTMs: null,
+
   suspicionUnusual: '',
   completedDebrief: 0
 };
@@ -394,6 +397,7 @@ const SAVE_COLUMNS = [
   'expectedOtherReciprocatorPoints',
   'reciprocateAmountFirstInputRTMs',
   'reciprocateAmountRTMs',
+  'costBenefitToReciprocateSubmitRTMs',
   'reciprocateReasonFirstInputRTMs',
   'reciprocateReasonRTMs',
   'expectedOtherReciprocatorFirstInputRTMs',
@@ -442,6 +446,7 @@ function getSaveRow(saveStage, saveIndex) {
       : null,
     reciprocateAmountFirstInputRTMs: studyState.reciprocateAmountFirstInputRTMs,
     reciprocateAmountRTMs: studyState.reciprocateAmountRTMs,
+    costBenefitToReciprocateSubmitRTMs: studyState.costBenefitToReciprocateSubmitRTMs,
     reciprocateReasonFirstInputRTMs: studyState.reciprocateReasonFirstInputRTMs,
     reciprocateReasonRTMs: studyState.reciprocateReasonRTMs,
     expectedOtherReciprocatorFirstInputRTMs: isTriad
@@ -1522,6 +1527,9 @@ const round1Outcome = {
   `,
   choices: ['Continue'],
   data: { label: 'round1_outcome' },
+  on_load: () => {
+    studyState.costBenefitPageShownAtMs = performance.now();
+  },
   on_finish: data => {
     data.benefitConditionPoints = benefitCondition;
   }
@@ -1622,6 +1630,7 @@ const round2Decision = {
   on_load: () => {
     studyState.reciprocateAmountFirstInputRTMs = null;
     studyState.reciprocateAmountRTMs = null;
+    studyState.costBenefitToReciprocateSubmitRTMs = null;
     studyState.reciprocateReasonFirstInputRTMs = null;
     studyState.reciprocateReasonRTMs = null;
     studyState.expectedOtherReciprocatorFirstInputRTMs = null;
@@ -1705,6 +1714,11 @@ const round2Decision = {
       studyState.reciprocatePointsToHelper = value;
       studyState.reciprocateAmountRTMs = performance.now() - pageStartAt;
 
+      if (studyState.costBenefitPageShownAtMs != null) {
+        studyState.costBenefitToReciprocateSubmitRTMs =
+          performance.now() - studyState.costBenefitPageShownAtMs;
+      }
+
       giveInput.disabled = true;
       giveBtn.disabled = true;
       giveReasonWrap.style.display = 'block';
@@ -1736,6 +1750,8 @@ const round2Decision = {
           reciprocateAmountFirstInputRTMs:
             studyState.reciprocateAmountFirstInputRTMs,
           reciprocateAmountRTMs: studyState.reciprocateAmountRTMs,
+          costBenefitToReciprocateSubmitRTMs:
+            studyState.costBenefitToReciprocateSubmitRTMs,
           reciprocateReasonFirstInputRTMs:
             studyState.reciprocateReasonFirstInputRTMs,
           reciprocateReasonRTMs: studyState.reciprocateReasonRTMs,
@@ -1776,6 +1792,8 @@ const round2Decision = {
           reciprocateAmountFirstInputRTMs:
             studyState.reciprocateAmountFirstInputRTMs,
           reciprocateAmountRTMs: studyState.reciprocateAmountRTMs,
+          costBenefitToReciprocateSubmitRTMs:
+            studyState.costBenefitToReciprocateSubmitRTMs,
           reciprocateReasonFirstInputRTMs:
             studyState.reciprocateReasonFirstInputRTMs,
           reciprocateReasonRTMs: studyState.reciprocateReasonRTMs,
@@ -1796,6 +1814,8 @@ const round2Decision = {
     data.reciprocateAmountFirstInputRTMs =
       studyState.reciprocateAmountFirstInputRTMs;
     data.reciprocateAmountRTMs = studyState.reciprocateAmountRTMs;
+    data.costBenefitToReciprocateSubmitRTMs =
+      studyState.costBenefitToReciprocateSubmitRTMs;
     data.reciprocateReasonFirstInputRTMs =
       studyState.reciprocateReasonFirstInputRTMs;
     data.reciprocateReasonRTMs = studyState.reciprocateReasonRTMs;
