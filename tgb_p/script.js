@@ -1,7 +1,7 @@
 /* === URLs / STUDY === */
-const DATAPIPE_EXPERIMENTID = 'KVvthzKCSmKv';
+const DATAPIPE_EXPERIMENTID = 'E2pz7MUXwXHO';
 const PROLIFIC_COMPLETION_URL =
-  'https://app.prolific.com/submissions/complete?cc=C1Q3302C';
+  'https://app.prolific.com/submissions/complete?cc=C1426OU8';
 
 /* === FACTORS / RANDOMIZATION === */
 const P_STRUCTURE_BENEFIT_ARM = 1.0;   // % going to structure x benefit
