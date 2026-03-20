@@ -4,7 +4,7 @@ const PROLIFIC_COMPLETION_URL =
   'https://app.prolific.com/submissions/complete?cc=C1Q3302C';
 
 /* === FACTORS / RANDOMIZATION === */
-const P_STRUCTURE_BENEFIT_ARM = 0.5;   // 50% go to structure x benefit
+const P_STRUCTURE_BENEFIT_ARM = 1.0;   // % going to structure x benefit
 const P_TRIAD = 0.5;
 const P_BENEFIT_HIGH = 0.5;
 const P_COST_HIGH = 0.5;
